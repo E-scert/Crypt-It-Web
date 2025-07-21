@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Decrypt Message | Crypt-IT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>🔓 Decrypt Message</h1>
+
+    <label for="cipherInput">Encrypted Message</label>
+    <textarea id="cipherInput" placeholder="Paste your encrypted message..."></textarea>
+
+    <button onclick="bruteForceDecrypt()" class="action-btn">Brute Force Decrypt 🧠</button>
+
+    <div class="result-box">
+      <h2>Decryption Attempts</h2>
+      <pre id="outputBox">Waiting to crack the cipher...</pre>
+    </div>
+
+    <button onclick="location.href='index.html'" class="back-btn">⬅ Home</button>
+  </div>
+
+  <script>
+    const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+
+    function bruteForceDecrypt() {
+      const encrypted = document.getElementById("cipherInput").value.toLowerCase();
+      let output = "";
+
+      for (let shift = 1; shift <= 25; shift++) {
+        let attempt = "";
+        for (let i = 0; i < encrypted.length; i++) {
+          const char = encrypted[i];
+          if (ALPHABET.includes(char)) {
+            const idx = ALPHABET.indexOf(char);
+            const newIdx = (26 + idx - shift) % 26;
+            attempt += ALPHABET[newIdx];
+          } else {
+            attempt += char;
+          }
+        }
+        output += `Shift ${shift}: ${attempt}\n\n`;
+      }
+
+      document.getElementById("outputBox").innerText = output;
+    }
+  </script>
+</body>
+</html>

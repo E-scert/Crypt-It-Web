@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Encrypt Message | Crypt-IT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>🛡️ Encrypt Message</h1>
+
+    <label for="messageInput">Your Message</label>
+    <textarea id="messageInput" placeholder="Type your secret message..."></textarea>
+
+    <label for="shiftInput">Shift Key</label>
+   <input type="number" id="shiftInput" placeholder="e.g. 3" min="1" max="25">
+
+
+    <button onclick="encrypt()" class="action-btn">Encrypt 🔐</button>
+
+    <div class="result-box">
+      <h2>Encrypted Output</h2>
+      <pre id="outputBox">Nothing yet...</pre>
+    </div>
+
+    <button onclick="location.href='index.html'" class="back-btn">⬅ Home</button>
+  </div>
+
+  <script>
+    const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+function encrypt() {
+  const message = document.getElementById("messageInput").value.toLowerCase();
+  const shift = parseInt(document.getElementById("shiftInput").value);
+
+  if (isNaN(shift) || shift < 1 || shift > 25) {
+    document.getElementById("outputBox").innerText = "⚠️ Shift key must be between 1 and 25.";
+    return;
+  }
+
+  let encrypted = "";
+  for (let i = 0; i < message.length; i++) {
+    const char = message[i];
+    if (ALPHABET.includes(char)) {
+      const idx = ALPHABET.indexOf(char);
+      const newIdx = (idx + shift) % 26;
+      encrypted += ALPHABET[newIdx];
+    } else {
+      encrypted += char;
+    }
+  }
+
+  document.getElementById("outputBox").innerText = encrypted;
+}
+
+   
+  </script>
+</body>
+</html>
